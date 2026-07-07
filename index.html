@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>猫体重管理改善方案</title>
+<title>你的猫，胖还是瘦？每天该喂多少克？</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f5f5f5;min-height:100vh;color:#333}
@@ -15,20 +15,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .nav-title{font-size:16px;font-weight:600;color:#1a1a2e}
 
 .page-home{padding:28px 20px 40px;text-align:center}
-.home-icon{font-size:52px;margin-bottom:10px}
-.home-badge{display:inline-block;background:#fff3e6;color:#e67e22;font-size:11px;padding:3px 10px;border-radius:16px;font-weight:500;margin-bottom:14px}
-.home-title{font-size:24px;font-weight:700;color:#1a1a2e;line-height:1.35;margin-bottom:6px}
-.home-sub{font-size:14px;color:#666;line-height:1.6;margin-bottom:22px}
+.home-title{font-size:22px;font-weight:700;color:#1a1a2e;line-height:1.4;margin-bottom:8px}
+.home-sub{font-size:14px;color:#666;line-height:1.6;margin-bottom:20px}
 
-.home-cards{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;text-align:left}
-.hc{background:#fff;border-radius:10px;padding:13px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
-.hc .icon{font-size:22px;margin-bottom:4px}
-.hc h3{font-size:13px;font-weight:600;color:#1a1a2e;margin-bottom:2px}
-.hc p{font-size:11px;color:#888;line-height:1.4}
+.home-value{background:#fff;border-radius:14px;padding:20px 18px;margin-bottom:16px;text-align:left;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.home-value h3{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:12px}
+.hv-item{font-size:13px;color:#444;line-height:1.6;padding:7px 0;border-bottom:1px solid #f5f5f5}
+.hv-item:last-child{border-bottom:none}
 
-.home-easy{background:#fff;border-radius:12px;padding:16px 18px;margin-bottom:18px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
-.home-easy h3{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:8px}
-.home-easy p{font-size:12px;color:#888;line-height:1.6}
+.home-price-anchor{font-size:13px;color:#888;line-height:1.8;margin-bottom:20px;padding:0 4px}
+.home-price-anchor strong{color:#e67e22}
 
 .btn-start{width:100%;padding:16px 24px;font-size:17px;font-weight:700;color:#fff;background:#ff6b6b;border:none;border-radius:12px;cursor:pointer;box-shadow:0 3px 12px rgba(255,107,107,0.3)}
 .btn-start:active{transform:scale(.98)}
@@ -138,6 +134,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .mp-note{background:#fafafa;border-radius:12px;padding:14px 16px;text-align:center;font-size:12px;color:#888;line-height:1.7;margin-top:16px}
 .mp-note strong{color:#555}
 
+/* 每日喂食计划 */
+.feed-plan{background:#fff;border-radius:14px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.feed-plan h3{font-size:15px;font-weight:700;color:#1a1a2e;margin-bottom:14px}
+.fp-table{width:100%;border-collapse:collapse;margin-bottom:12px}
+.fp-table td{padding:8px 4px;font-size:13px;border-bottom:1px solid #f5f5f5;color:#444}
+.fp-table td:first-child{color:#888;font-size:12px;width:28%}
+.fp-table td:nth-child(2){color:#555;width:15%}
+.fp-table td:last-child{font-weight:700;color:#1a1a2e;text-align:right;width:22%}
+.fp-table tr:last-child td{border-bottom:2px solid #ff6b6b}
+.fp-total{text-align:center;padding:8px 0 2px;font-size:15px;font-weight:700;color:#ff6b6b}
+.fp-meta{font-size:12px;color:#666;text-align:center;margin-bottom:8px}
+.fp-tip{font-size:12px;color:#999;text-align:center;line-height:1.5;background:#fff8f0;border-radius:8px;padding:8px 12px}
+
+/* 计算展示 */
+.calc-showcase{background:#fff;border-radius:14px;padding:18px 16px;margin-bottom:12px;box-shadow:0 1px 2px rgba(0,0,0,0.04)}
+.calc-showcase h3{font-size:14px;font-weight:700;color:#e67e22;margin-bottom:6px;line-height:1.5}
+.cs-sub{font-size:11px;color:#999;margin-bottom:14px}
+.cs-step{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:12px;color:#555;line-height:1.7}
+.cs-step:last-child{border-bottom:none}
+.cs-check{color:#27ae60;font-weight:700;flex-shrink:0}
+.cs-step strong{color:#1a1a2e}
+
 /* 测算中 */
 .page-loading{display:none;padding:60px 24px 40px;text-align:center}
 .load-icon{font-size:56px;margin-bottom:16px;animation:lb 1.2s ease-in-out infinite}
@@ -171,25 +189,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 
 <!-- 首页 -->
 <div id="pageHome" class="page-home">
-  <div class="home-icon">🐱</div>
-  <div class="home-badge">兽医 BCS 体况评分 + RER/MER 热量公式 + 真实猫粮热量数据</div>
-  <h1 class="home-title">生成你的猫<br>体重管理改善方案</h1>
-  <p class="home-sub">输入体重，回答几道选择题<br>根据你家猫吃的猫粮，算出每天精确喂食克数</p>
+  <h1 class="home-title">你的猫，胖还是瘦？需要增重还是减重？<br>每天到底该喂多少？</h1>
+  <p class="home-sub">回答 7 道题，给你一份能照着做的专属喂食方案。</p>
+  <p class="home-sub" style="margin-bottom:18px">什么时候喂、每顿多少克、饿了怎么处理，<br>都帮你写好，拿到就能执行。</p>
 
-  <div class="home-cards">
-    <div class="hc"><div class="icon">📊</div><h3>BCS 体况评分</h3><p>3 个角度判断猫是胖是瘦</p></div>
-    <div class="hc"><div class="icon">⚖️</div><h3>精确喂食克数</h3><p>根据你喂的猫粮品牌算</p></div>
-    <div class="hc"><div class="icon">🔥</div><h3>每日热量</h3><p>自动算出需要多少 kcal</p></div>
-    <div class="hc"><div class="icon">📅</div><h3>30 天改善路线</h3><p>每周做什么，一步步来</p></div>
+  <div class="home-value">
+    <h3>方案里有：</h3>
+    <div class="hv-item">分餐表 —— 早中晚睡前各喂多少克</div>
+    <div class="hv-item">每天行动计划 —— 今天开始做什么</div>
+    <div class="hv-item">猫粮热量匹配 —— 你喂的那款粮，对应几克</div>
+    <div class="hv-item">饱腹感应对 —— 猫饿了乱叫怎么办</div>
+    <div class="hv-item">目标体重 + 安全周期 —— 有数字，不瞎猜</div>
   </div>
 
-  <div class="home-easy">
-    <h3>👆 只需要填 1 个数字</h3>
-    <p>输入猫的体重 → 做 7 道选择题 → 出完整方案。包括每天喂什么粮、喂多少克、怎么让猫不饿。</p>
+  <div class="home-price-anchor">
+    不用查概念、不用记公式、不用按计算器、不用再花费时间去学习专业知识。<br>
+    医院做一套 ≈ ¥300，这里一分钟拿到方案。
   </div>
 
   <button class="btn-start" onclick="startTest()">开始测试</button>
-  <div class="home-footer">所用算法均基于「猫体重管理-木子」小程序</div>
+  <div class="home-footer">本计算基于「猫体重管理-木子」小程序算法</div>
 </div>
 
 <!-- 导航栏 -->
@@ -578,7 +597,11 @@ function calcR() {
     probs.push('每天喂 <strong>'+dailyFood+' 克 '+food.brand+' '+food.name+'</strong>，这是按热量精确算出来的。');
   }
   if(direction === 'gain') {
-    probs.push('每天喂 <strong>'+dailyFood+' 克 '+food.brand+' '+food.name+'</strong>，比正常量多，帮猫长肉。');
+    if(food.cat === '减肥粮' || food.cat === '处方粮' || food.cat === '低脂粮') {
+      probs.push('你选的 <strong>'+food.brand+' '+food.name+'</strong> 是'+food.cat+'，热量偏低，不适合增重。建议换成普通粮或高蛋白粮。');
+    } else {
+      probs.push('每天喂 <strong>'+dailyFood+' 克 '+food.brand+' '+food.name+'</strong>，比正常量多，帮猫长肉。');
+    }
   }
   if(probs.length === 0) probs.push('喂养情况基本合理，继续保持就好。');
 
@@ -643,70 +666,94 @@ function showResult() {
 
   var html = '';
 
-  // BCS
-  html += '<div class="r-card fade-in"><h3>📊 BCS 评分结果</h3>';
-  html += '<div class="bcs-row"><div class="bcs-circle '+csClass+'"><div class="big">'+r.bcs+'</div><div class="sm">/ 9 分</div></div>';
-  html += '<div class="bcs-info"><div class="t">'+r.typeName+'体型</div><div class="d">结合俯视、侧面、摸肋骨三个角度判断的。</div></div></div>';
-  dims.forEach(function(d) {
-    html += '<div class="dim-row"><span>'+d.label+'：</span><span style="color:#1a1a2e;font-weight:500">'+d.t[d.v]+'</span></div>';
-  });
+  // ① 每日喂食计划（处方风格）
+  html += '<div class="feed-plan fade-in"><h3>🍽️ 每日喂食计划</h3>';
+  if(r.direction === 'gain') {
+    var isDietFood = (f.cat === '减肥粮' || f.cat === '处方粮' || f.cat === '低脂粮');
+    if(isDietFood) {
+      html += '<div style="background:#fff3e0;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:#e65100;line-height:1.6">';
+      html += '<strong>⚠️ 你选的是'+f.cat+'，不适合增重</strong><br>';
+      html += '减肥粮和低脂粮热量低、脂肪少，猫吃再多也很难长肉。要增重，建议换成<strong>普通粮或高蛋白粮</strong>（蛋白质 ≥ 35%）。';
+      html += '<br><br>下面按<strong>普通粮平均热量 370 kcal/100g</strong>重新算了一份喂食量（买到新粮后请按新粮热量重新测算）：';
+      html += '</div>';
+      // 用普通粮平均热量重算
+      var normalKcal = 370;
+      var normalDensity = normalKcal / 100;
+      var normalFood = Math.round(r.dailyKcal / normalDensity);
+      var ns1=Math.round(normalFood*0.26), ns2=Math.round(normalFood*0.20), ns3=Math.round(normalFood*0.26), ns4=Math.round(normalFood*0.28);
+      html += '<table class="fp-table">';
+      html += '<tr><td>早餐 7:00</td><td>约</td><td>'+ns1+' 克</td></tr>';
+      html += '<tr><td>午餐 12:00</td><td>约</td><td>'+ns2+' 克</td></tr>';
+      html += '<tr><td>晚餐 18:00</td><td>约</td><td>'+ns3+' 克</td></tr>';
+      html += '<tr><td>睡前 22:00</td><td>约</td><td>'+ns4+' 克</td></tr>';
+      html += '</table>';
+      html += '<div class="fp-total">合计 '+normalFood+' 克 / 天</div>';
+      html += '<div class="fp-meta">按普通粮平均热量 370 kcal/100g 计算</div>';
+      html += '<div class="fp-tip">💡 换粮后选蛋白质 ≥ 35% 的猫粮，长肉需要蛋白质。</div>';
+    } else {
+      html += '<table class="fp-table">';
+      html += '<tr><td>早餐 7:00</td><td>约</td><td>'+Math.round(r.s1)+' 克</td></tr>';
+      html += '<tr><td>午餐 12:00</td><td>约</td><td>'+Math.round(r.s2)+' 克</td></tr>';
+      html += '<tr><td>晚餐 18:00</td><td>约</td><td>'+Math.round(r.s3)+' 克</td></tr>';
+      html += '<tr><td>睡前 22:00</td><td>约</td><td>'+Math.round(r.s4)+' 克</td></tr>';
+      html += '</table>';
+      html += '<div class="fp-total">合计 '+r.dailyFood+' 克 / 天</div>';
+      html += '<div class="fp-meta">'+f.brand+(f.name?' '+f.name:'')+'（'+f.kcal+' kcal/100g）</div>';
+      html += '<div class="fp-tip">💡 选蛋白质 ≥ 35% 的猫粮，长肉需要蛋白质。</div>';
+    }
+  } else if(r.direction === 'maintain') {
+    html += '<table class="fp-table">';
+    html += '<tr><td>早餐 7:00</td><td>约</td><td>'+Math.round(r.dailyFood*0.34)+' 克</td></tr>';
+    html += '<tr><td>晚餐 18:00</td><td>约</td><td>'+Math.round(r.dailyFood*0.33)+' 克</td></tr>';
+    html += '<tr><td>睡前 22:00</td><td>约</td><td>'+Math.round(r.dailyFood*0.33)+' 克</td></tr>';
+    html += '</table>';
+    html += '<div class="fp-total">合计 '+r.dailyFood+' 克 / 天</div>';
+    html += '<div class="fp-meta">'+f.brand+(f.name?' '+f.name:'')+'（'+f.kcal+' kcal/100g）</div>';
+    html += '<div class="fp-tip">💡 买个厨房秤，每餐称好再喂。体重不涨不降就说明数量刚刚好。</div>';
+  } else {
+    html += '<table class="fp-table">';
+    html += '<tr><td>早餐 7:00</td><td>约</td><td>'+Math.round(r.s1)+' 克</td></tr>';
+    html += '<tr><td>午餐 12:00</td><td>约</td><td>'+Math.round(r.s2)+' 克</td></tr>';
+    html += '<tr><td>晚餐 18:00</td><td>约</td><td>'+Math.round(r.s3)+' 克</td></tr>';
+    html += '<tr><td>睡前 22:00</td><td>约</td><td>'+Math.round(r.s4)+' 克</td></tr>';
+    html += '</table>';
+    html += '<div class="fp-total">合计 '+r.dailyFood+' 克 / 天</div>';
+    html += '<div class="fp-meta">'+f.brand+(f.name?' '+f.name:'')+'（'+f.kcal+' kcal/100g）</div>';
+    html += '<div class="fp-tip">💡 建议用温水泡 5 分钟再喂。吸水膨胀 3 倍，猫吃着更容易饱。</div>';
+  }
   html += '</div>';
 
-  // 核心数据
-  html += '<div class="r-card fade-in"><h3>⚖️ 核心数据</h3>';
+  // ② 关键数据
+  html += '<div class="r-card fade-in"><h3>📊 关键数据</h3>';
   html += '<div class="data-grid">';
   html += '<div class="di"><div class="val">'+r.w+' kg</div><div class="lbl">现在体重</div></div>';
   html += '<div class="di"><div class="val">'+r.targetW+' kg</div><div class="lbl">目标体重</div></div>';
-  html += '<div class="di"><div class="val">'+r.dailyKcal+'</div><div class="lbl">每天需要热量 (kcal)</div></div>';
-  html += '<div class="di"><div class="val">'+r.dailyFood+' 克</div><div class="lbl">每天该喂 '+f.brand+(f.name?' '+f.name:'')+'</div></div>';
+  html += '<div class="di"><div class="val">'+r.dailyKcal+' kcal</div><div class="lbl">每天热量</div></div>';
   if(r.direction === 'gain') {
-    html += '<div class="di"><div class="val">'+r.delta+' kg</div><div class="lbl">需要增重</div></div>';
+    html += '<div class="di"><div class="val">+'+r.delta+' kg</div><div class="lbl">需要增重</div></div>';
   } else if(r.direction === 'lose') {
-    html += '<div class="di"><div class="val">'+r.delta+' kg</div><div class="lbl">需要减重</div></div>';
+    html += '<div class="di"><div class="val">-'+r.delta+' kg</div><div class="lbl">需要减重</div></div>';
     html += '<div class="di"><div class="val">约 '+r.weeks+' 周</div><div class="lbl">预计达标</div></div>';
-  }
-  html += '</div>';
-
-  // 计算过程
-  html += '<div class="calc-toggle" onclick="var n=this.nextElementSibling;n.classList.toggle(\'show\');this.textContent=n.classList.contains(\'show\')?\'▲ 收起计算过程\':\'▼ 怎么算出来的？\'">▼ 怎么算出来的？</div>';
-  html += '<div class="calc-detail">';
-  if(r.direction === 'gain') {
-    html += '<p><strong>① 目标体重</strong><br>BCS ≤ 4（偏瘦）→ 目标 = '+r.w+' × 1.15 ≈ <strong>'+r.targetW+' kg</strong></p>';
-  } else if(r.direction === 'maintain') {
-    html += '<p><strong>① 目标体重</strong><br>BCS = '+r.bcs+'（标准）→ 目标 = 现在体重 = <strong>'+r.targetW+' kg</strong></p>';
   } else {
-    html += '<p><strong>① 目标体重</strong><br>'+r.w+' ÷ [ 1 + ('+r.bcs+' − 5) × 0.10 ] = '+r.w+' ÷ '+(1+(r.bcs-5)*0.10).toFixed(2)+' ≈ <strong>'+r.targetW+' kg</strong></p>';
+    html += '<div class="di"><div class="val">保持</div><div class="lbl">当前状态</div></div>';
   }
-  html += '<p><strong>② 静息热量 RER</strong><br>70 × '+r.w+'<sup>0.75</sup> ≈ <strong>'+r.rer+' kcal</strong></p>';
-  html += '<p><strong>③ 调整热量 MER</strong><br>'+r.rer+' × '+r.merFactor.toFixed(1)+' = <strong>'+r.mer+' kcal</strong></p>';
-  if(r.direction === 'gain') {
-    html += '<p><strong>④ 增重需要多吃</strong><br>'+r.mer+' × 1.2 ≈ <strong>'+r.dailyKcal+' kcal/天</strong></p>';
-  } else if(r.direction === 'lose') {
-    html += '<p><strong>④ 减肥需要少吃</strong><br>'+r.mer+' × 0.8 ≈ <strong>'+r.dailyKcal+' kcal/天</strong></p>';
-  } else {
-    html += '<p><strong>④ 保持体重</strong><br>= <strong>'+r.dailyKcal+' kcal/天</strong></p>';
-  }
-  html += '<p><strong>⑤ 换算成猫粮克数</strong><br>你选的 '+f.brand+'：'+f.kcal+' kcal/100g = '+r.foodDensity.toFixed(2)+' kcal/g<br>'+r.dailyKcal+' ÷ '+r.foodDensity.toFixed(2)+' ≈ <strong>'+r.dailyFood+' 克/天</strong></p>';
-  html += '</div>';
-  html += '</div>';
+  html += '</div></div>';
 
-  // 问题
-  html += '<div class="r-card fade-in"><h3>⚠️ 需要关注的问题</h3>';
-  r.probs.forEach(function(p) {
-    html += '<div class="prob-item"><div class="p-dot"></div><div>'+p+'</div></div>';
-  });
-  html += '</div>';
-
-  // 行动建议
+  // ③ 行动清单
   html += '<div class="sec fade-in"><h3>💡 每天该怎么做</h3>';
   if(r.direction === 'gain') {
-    var acts = [
-      '每天喂 <strong>'+r.dailyFood+' 克 '+f.brand+'</strong>，分成 4 次，每顿大约 '+Math.round(r.dailyFood/4)+' 克。',
-      '买个厨房秤（十几块钱），每餐称好再喂，别凭感觉倒。',
-      '选蛋白质高的猫粮（包装上蛋白质 ≥ 35%），长肉需要蛋白质。',
-      '每天可以加一小块水煮鸡胸（15g），几乎不增加热量但补充蛋白质。',
-      '每周称一次体重，记下来。连续两周体重没涨，每天再多加 10% 的量。'
-    ];
+    var isDietFood2 = (f.cat === '减肥粮' || f.cat === '处方粮' || f.cat === '低脂粮');
+    var acts = [];
+    if(isDietFood2) {
+      acts.push('<strong>先把猫粮换成普通粮或高蛋白粮</strong>。减肥粮/低脂粮热量太低，猫吃再多也长不了肉。');
+      acts.push('换粮要慢慢来：旧粮和新粮混着喂，7 天内逐渐增加新粮比例，别突然全换，猫会拉肚子。');
+      acts.push('换好粮后，每天喂 <strong>'+Math.round(r.dailyKcal/3.7)+' 克</strong>，分 4 次。买个厨房秤，每餐称好再喂。（这是按普通粮平均热量估算的，买到新粮后请按新粮热量重新测算）');
+    } else {
+      acts.push('每天喂 <strong>'+r.dailyFood+' 克 '+f.brand+'</strong>，分成 4 次，每顿大约 '+Math.round(r.dailyFood/4)+' 克。');
+      acts.push('买个厨房秤（十几块钱），每餐称好再喂，别凭感觉倒。');
+      acts.push('选蛋白质高的猫粮（包装上蛋白质 ≥ 35%），长肉需要蛋白质。');
+    }
+    acts.push('每周称一次体重，记下来。连续两周体重没涨，每天再多加 10% 的量。');
     acts.forEach(function(a,i) { html += '<div class="act-item"><div class="act-num">'+(i+1)+'</div><div class="act-txt">'+a+'</div></div>'; });
   } else if(r.direction === 'maintain') {
     var acts2 = [
@@ -729,9 +776,9 @@ function showResult() {
   }
   html += '</div>';
 
-  // 饱腹感（仅减肥时显示）
+  // ④ 饱腹感（仅减肥时显示）
   if(r.direction === 'lose') {
-    html += '<div class="sec fade-in"><h3>🍽️ 猫饿了怎么办（饱腹感建议）</h3>';
+    html += '<div class="sec fade-in"><h3>🍽️ 猫饿了怎么办</h3>';
     html += '<p style="font-size:12px;color:#666;margin-bottom:12px;line-height:1.6">突然少吃了，猫肯定会叫。下面这些方法能让猫肚子舒服一点，但不增加热量。</p>';
     var sats = [
       {icon:'💧', txt:'<strong>用温水泡 '+r.dailyFood+' 克猫粮</strong><br>温水泡 5 分钟再喂。吸水后膨胀 3 倍，看起来多了很多，猫吃着也更容易饱。'},
@@ -742,26 +789,29 @@ function showResult() {
     sats.forEach(function(s) {
       html += '<div class="sat-item"><div class="sat-icon">'+s.icon+'</div><div class="sat-txt">'+s.txt+'</div></div>';
     });
-    html += '<p style="font-size:12px;color:#999;text-align:center;margin-top:10px">猫饿了叫是正常的，一般 3-7 天就适应新食量了。坚持住，别心软。</p>';
+    html += '<p style="font-size:12px;color:#999;text-align:center;margin-top:10px">猫饿了叫是正常的，一般 3-7 天就适应新食量了。<br>实在忍不住想加餐：只给 15g 水煮鸡胸（不放调料），别碰猫粮和零食。<br>心软一次多加 20 克，前两天减的量就白费了。</p>';
     html += '</div>';
   }
 
-  // 风险
-  html += '<div class="r-card fade-in"><h3>🚨 需要注意</h3>';
-  r.risks.forEach(function(ri) {
-    html += '<div class="prob-item"><div class="p-dot"></div><div>'+ri+'</div></div>';
-  });
-  html += '</div>';
-
-  // 30 天路线
+  // ⑤ 30 天路线
   var tl;
   if(r.direction === 'gain') {
-    tl = [
-      {w:'第 1 周',t:'开始加量',d:'每天按 '+r.dailyFood+' 克 '+f.brand+' 喂，分 4 次。买厨房秤，每顿称好。记下现在的体重。'},
-      {w:'第 2 周',t:'观察反应',d:'看猫能不能吃完。每顿吃光还叫的话，试着每天多加 10%。每周加一餐水煮鸡肉 15g。第 14 天称体重。'},
-      {w:'第 3 周',t:'看体重调整',d:'对比两次体重。两周涨了不到 2%，再多加一点。涨了 5% 以上就保持现在的量。'},
-      {w:'第 4 周',t:'养成节奏',d:'固定每周称一次体重，记下来。对比体型变化。保持这个节奏继续走。'}
-    ];
+    var isDietFood3 = (f.cat === '减肥粮' || f.cat === '处方粮' || f.cat === '低脂粮');
+    if(isDietFood3) {
+      tl = [
+        {w:'第 1 周',t:'换粮过渡',d:'开始把减肥粮换成普通粮或高蛋白粮。旧粮新粮混着喂，7 天内逐渐增加新粮比例。买厨房秤，记下现在的体重。'},
+        {w:'第 2 周',t:'开始加量',d:'换粮完成后，每天喂 '+Math.round(r.dailyKcal/3.7)+' 克，分 4 次（这是按普通粮平均热量估算的，买到新粮后请按新粮热量重新测算）。每顿吃光还叫的话，试着每天多加 10%。第 14 天称体重。'},
+        {w:'第 3 周',t:'看体重调整',d:'对比两次体重。两周涨了不到 2%，再多加一点。涨了 5% 以上就保持现在的量。'},
+        {w:'第 4 周',t:'养成节奏',d:'固定每周称一次体重，记下来。对比体型变化。保持这个节奏继续走。'}
+      ];
+    } else {
+      tl = [
+        {w:'第 1 周',t:'开始加量',d:'每天按 '+r.dailyFood+' 克 '+f.brand+' 喂，分 4 次。买厨房秤，每顿称好。记下现在的体重。'},
+        {w:'第 2 周',t:'观察反应',d:'看猫能不能吃完。每顿吃光还叫的话，试着每天多加 10%。第 14 天称体重。'},
+        {w:'第 3 周',t:'看体重调整',d:'对比两次体重。两周涨了不到 2%，再多加一点。涨了 5% 以上就保持现在的量。'},
+        {w:'第 4 周',t:'养成节奏',d:'固定每周称一次体重，记下来。对比体型变化。保持这个节奏继续走。'}
+      ];
+    }
   } else if(r.direction === 'maintain') {
     tl = [
       {w:'第 1 周',t:'建立基准',d:'按 '+r.dailyFood+' 克/天喂 '+f.brand+'，分 3 次。买厨房秤。记下现在的体重。'},
@@ -783,10 +833,18 @@ function showResult() {
   });
   html += '</div>';
 
-  // 小程序说明
+  // ⑥ 注意事项
+  html += '<div class="r-card fade-in"><h3>⚠️ 需要注意</h3>';
+  r.risks.forEach(function(ri) {
+    html += '<div class="prob-item"><div class="p-dot"></div><div>'+ri+'</div></div>';
+  });
+  html += '</div>';
+
+  // ⑧ 小程序引导
   html += '<div class="mp-note">';
-  html += '<p style="margin-bottom:6px">这只是一次测算结果。要科学管理猫的体重，需要持续记录体重变化，让算法根据实际数据反复修正喂食量。</p>';
-  html += '<p>搜索微信小程序 <strong>「猫体重管理-木子」</strong>，可以每周记录体重、追踪变化曲线、让算法给你不断校准。</p>';
+html += '<p style="margin-bottom:8px;font-size:13px;color:#888;line-height:1.8;text-align:left"><strong>📌 说明</strong><br>以上计算结果基于兽医通用的 BCS 体况评分和 RER/MER 热量公式。这是一次性的初步估算，只能帮你确定一个大致的起点。</p>';
+html += '<p style="margin-bottom:8px;font-size:13px;color:#888;line-height:1.8;text-align:left">要拿到真正精准、适合你家猫的方案，需要持续记录每周的体重变化和 BCS 体况测量。算法会根据你的持续数据，不断修正喂食量，越用越准。</p>';
+html += '<p style="font-size:13px;color:#888;line-height:1.8;text-align:left">搜索微信小程序 <strong>「猫体重管理-木子」</strong>，每周花 1 分钟记录体重、自测 BCS，让算法帮你持续校准。</p>';
   html += '</div>';
 
   document.getElementById('rContent').innerHTML = html;
